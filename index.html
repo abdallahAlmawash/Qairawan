@@ -31,7 +31,9 @@ a{color:inherit}
 /* top bar */
 .top{background:var(--burgundy-deep);color:var(--paper)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px}
-.top img{height:60px;width:auto}
+.top .brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:#fff}
+.top .brand img{height:64px;width:auto}
+.top .brand span{font-family:var(--f-display);font-weight:800;font-size:28px;line-height:1;letter-spacing:0}
 .top a.call{font-weight:600;text-decoration:none;font-size:14px;border:1px solid rgba(255,255,255,.35);padding:6px 14px;border-radius:999px;white-space:nowrap}
 
 /* hero */
@@ -166,7 +168,7 @@ footer .lic b{color:#fff;font-variant-numeric:tabular-nums}
   .about .box{grid-template-columns:1fr;padding:18px}
   .info{grid-template-columns:1fr}
   footer .wrap{grid-template-columns:1fr}
-  .top img{height:48px}
+  .top .brand img{height:50px}.top .brand span{font-size:23px}.top .brand{gap:10px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
@@ -176,7 +178,7 @@ footer .lic b{color:#fff;font-variant-numeric:tabular-nums}
 
 
 <div class="top"><div class="wrap">
-  <img src="img/logo-white.png" alt="شركة هجف العقارية">
+  <a class="brand" href="#" aria-label="هجف العقارية"><img src="img/mark-white.png" alt=""><span>هجف العقارية</span></a>
   <a class="call" href="https://wa.me/966570707301" target="_blank" rel="noopener">تواصل واتساب</a>
 </div></div>
 
