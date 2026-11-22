@@ -13,7 +13,7 @@
 :root{
   --burgundy:#5E1622; --burgundy-deep:#3F0C15; --copper:#B87A4B; --copper-soft:#E5C3A0;
   --cream:#F7F1E8; --paper:#FFFDF9; --ink:#2A1A1C; --muted:#7A6466; --line:#E7DACB;
-  --ok:#1F7A4D; --ok-bg:#E3F3EA; --no:#9B2C2C; --no-bg:#F8E4E2;
+  --ok:#103B2C; --ok-bg:#E2ECE6; --green:#103B2C; --no:#9B2C2C; --no-bg:#F8E4E2;
   --f-display:"Noto Kufi Arabic","IBM Plex Sans Arabic",Tahoma,sans-serif;
   --f-body:"IBM Plex Sans Arabic",Tahoma,"Segoe UI",sans-serif;
   color-scheme:light;
@@ -32,8 +32,9 @@ a{color:inherit}
 .top{background:var(--burgundy-deep);color:var(--paper)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px}
 .top .brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:#fff}
-.top .brand img{height:64px;width:auto}
-.top .brand span{font-family:var(--f-display);font-weight:800;font-size:28px;line-height:1;letter-spacing:0}
+.top .brand img{width:auto;display:block}
+.top .brand .mk{height:68px}
+.top .brand .wm{height:24px}
 .top a.call{font-weight:600;text-decoration:none;font-size:14px;border:1px solid rgba(255,255,255,.35);padding:6px 14px;border-radius:999px;white-space:nowrap}
 
 /* hero */
@@ -84,7 +85,7 @@ section.units{padding-block:48px 24px}
 .vhead{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:18px}
 .vhead h2{font-size:clamp(40px,7vw,64px);font-weight:800;line-height:1.1;color:var(--burgundy)}
 .v2 .vhead h2{color:var(--copper)}
-.vhead p{margin:0;font-size:17px;color:var(--muted);font-weight:500}
+.vhead p{margin:0;font-size:17px;color:var(--green);font-weight:500}
 .divider{display:flex;align-items:center;gap:20px;margin:56px auto 48px;max-width:640px}
 .divider span{flex:1;height:1px;background:linear-gradient(to left,transparent,var(--copper))}
 .divider span:last-child{background:linear-gradient(to right,transparent,var(--copper))}
@@ -112,16 +113,16 @@ h3 small.no{font-family:var(--f-body);font-size:13px;color:var(--muted);font-wei
 /* about */
 section.about{padding-block:24px 48px}
 .about .box{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:28px}
-.about h2{font-size:22px;color:var(--burgundy);margin-bottom:10px}
+.about h2{font-size:22px;color:var(--green);margin-bottom:10px}
 .feat{list-style:none;margin:0;padding:0;display:grid;gap:8px}
 .feat li{padding-right:20px;position:relative}
-.feat li::before{content:"";position:absolute;right:0;top:.7em;width:8px;height:8px;border-radius:2px;background:var(--copper);transform:rotate(45deg)}
+.feat li::before{content:"";position:absolute;right:0;top:.7em;width:8px;height:8px;border-radius:2px;background:var(--green);transform:rotate(45deg)}
 dl.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:0}
 dl.kv dt{color:var(--muted)}
 dl.kv dd{margin:0;font-weight:500;font-variant-numeric:tabular-nums}
 
 /* footer */
-footer{background:var(--burgundy-deep);color:#EAD9D3}
+footer{background:var(--burgundy-deep);color:#EAD9D3;border-top:4px solid var(--green)}
 footer .wrap{padding-block:32px;display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:24px}
 footer img{height:70px;width:auto}
 footer h4{margin:0 0 8px;color:var(--copper-soft);font-family:var(--f-display);font-size:15px}
@@ -168,7 +169,7 @@ footer .lic b{color:#fff;font-variant-numeric:tabular-nums}
   .about .box{grid-template-columns:1fr;padding:18px}
   .info{grid-template-columns:1fr}
   footer .wrap{grid-template-columns:1fr}
-  .top .brand img{height:50px}.top .brand span{font-size:23px}.top .brand{gap:10px}
+  .top .brand .mk{height:54px}.top .brand .wm{height:20px}.top .brand{gap:12px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
@@ -178,7 +179,7 @@ footer .lic b{color:#fff;font-variant-numeric:tabular-nums}
 
 
 <div class="top"><div class="wrap">
-  <a class="brand" href="#" aria-label="هجف العقارية"><img src="img/mark-white.png" alt=""><span>هجف العقارية</span></a>
+  <a class="brand" href="#" aria-label="هجف العقارية"><img class="mk" src="img/mark-white.png" alt=""><img class="wm" src="img/wordmark-white.png" alt="هجف العقارية"></a>
   <a class="call" href="https://wa.me/966570707301" target="_blank" rel="noopener">تواصل واتساب</a>
 </div></div>
 
