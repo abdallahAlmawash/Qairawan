@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="أدوار القيروان - هجف العقارية: وحدات للبيع والإيجار في حي القيروان بالرياض">
+<link rel="icon" href="img/logo-copper.png">
+<title>أدوار القيروان</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Noto+Kufi+Arabic:wght@500;700;800&display=swap">
+<style>
+/* Layout: burgundy brand band + facade hero, then a units grid; each unit opens a detail sheet with its gallery. Single brand look (cream/burgundy/copper). */
+:root{
+  --burgundy:#5E1622; --burgundy-deep:#3F0C15; --copper:#B87A4B; --copper-soft:#E5C3A0;
+  --cream:#F7F1E8; --paper:#FFFDF9; --ink:#2A1A1C; --muted:#7A6466; --line:#E7DACB;
+  --ok:#1F7A4D; --ok-bg:#E3F3EA; --no:#9B2C2C; --no-bg:#F8E4E2;
+  --f-display:"Noto Kufi Arabic","IBM Plex Sans Arabic",Tahoma,sans-serif;
+  --f-body:"IBM Plex Sans Arabic",Tahoma,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.7;direction:rtl}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--burgundy-deep)}
+.wrap{max-width:1120px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.35}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--copper);outline-offset:2px}
+
+/* top bar */
+.top{background:var(--burgundy-deep);color:var(--paper)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px}
+.top img{height:60px;width:auto}
+.top a.call{font-weight:600;text-decoration:none;font-size:14px;border:1px solid rgba(255,255,255,.35);padding:6px 14px;border-radius:999px;white-space:nowrap}
+
+/* hero */
+.hero{background:var(--burgundy);color:var(--paper)}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:center;padding-block:40px}
+.eyebrow{color:var(--copper-soft);font-size:14px;letter-spacing:.02em;font-weight:500}
+.hero h1{font-size:clamp(34px,6vw,56px);font-weight:800;margin-block:6px 10px}
+.hero p{color:#EAD9D3;max-width:46ch;margin:0}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.15);border-radius:14px;overflow:hidden;margin-top:24px}
+.facts div{background:var(--burgundy);padding:12px 14px}
+.facts b{display:block;font-family:var(--f-display);font-size:20px;color:var(--paper);font-variant-numeric:tabular-nums}
+.facts span{font-size:13px;color:var(--copper-soft)}
+.hero figure{margin:0;border-radius:18px;overflow:hidden;aspect-ratio:4/5;max-width:100%;box-shadow:0 20px 50px rgba(0,0,0,.35);border:3px solid var(--copper)}
+.hero figure img{width:100%;height:100%;object-fit:cover;display:block}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-body);font-weight:600;font-size:15px;padding:11px 20px;border-radius:999px;text-decoration:none;border:0;cursor:pointer}
+.btn.copper{background:var(--copper);color:#fff}
+.btn.ghost{background:transparent;color:var(--paper);border:1px solid rgba(255,255,255,.4)}
+.btn.burg{background:var(--burgundy);color:#fff}
+.btn.line{background:var(--paper);color:var(--burgundy);border:1px solid var(--line)}
+
+/* units */
+section.units{padding-block:48px 24px}
+.head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.head h2{font-size:clamp(24px,3.4vw,32px);color:var(--burgundy)}
+.head p{margin:0;color:var(--muted)}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.filters button{font-family:var(--f-body);font-size:14px;font-weight:500;border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:7px 16px;border-radius:999px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--burgundy);color:#fff;border-color:var(--burgundy)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;cursor:pointer;transition:transform .2s,box-shadow .2s;text-align:right;padding:0;font:inherit;color:inherit}
+.card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(94,22,34,.12)}
+.card .ph{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--line)}
+.card .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.card .count{position:absolute;bottom:10px;left:10px;background:rgba(42,26,28,.72);color:#fff;font-size:12px;padding:3px 10px;border-radius:999px}
+.tags{position:absolute;top:10px;right:10px;display:flex;gap:6px}
+.pill{font-size:12.5px;font-weight:600;padding:4px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:6px}
+.pill.ok{background:var(--ok-bg);color:var(--ok)}
+.pill.no{background:var(--no-bg);color:var(--no)}
+.pill.ok::before,.pill.no::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.pill.deal{background:var(--burgundy);color:#fff}
+.card .body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1}
+.card h3{font-size:20px;color:var(--burgundy)}
+.card .sub{color:var(--muted);font-size:14px;margin-top:-6px}
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:8px;margin:0;padding:0;list-style:none}
+.specs li{background:var(--cream);border-radius:10px;padding:8px 10px;font-size:12.5px;color:var(--muted)}
+.specs b{display:block;color:var(--ink);font-size:15px;font-variant-numeric:tabular-nums}
+.villa{font-size:19px;color:var(--ink);margin:26px 0 12px;display:flex;align-items:center;gap:10px}
+.villa::before{content:"";width:10px;height:10px;background:var(--copper);transform:rotate(45deg)}
+#grid > .villa:first-child{margin-top:0}
+h3 small.no{font-family:var(--f-body);font-size:13px;color:var(--muted);font-weight:500}
+.price.sm{font-size:19px;margin-top:-4px}
+.card .more{margin-top:auto;color:var(--copper);font-weight:600;font-size:14px}
+.tbd{color:var(--copper)!important;font-style:normal}
+.card.off .ph img{filter:grayscale(.6)}
+
+/* about */
+section.about{padding-block:24px 48px}
+.about .box{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.about h2{font-size:22px;color:var(--burgundy);margin-bottom:10px}
+.feat{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.feat li{padding-right:20px;position:relative}
+.feat li::before{content:"";position:absolute;right:0;top:.7em;width:8px;height:8px;border-radius:2px;background:var(--copper);transform:rotate(45deg)}
+dl.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:0}
+dl.kv dt{color:var(--muted)}
+dl.kv dd{margin:0;font-weight:500;font-variant-numeric:tabular-nums}
+
+/* footer */
+footer{background:var(--burgundy-deep);color:#EAD9D3}
+footer .wrap{padding-block:32px;display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:24px}
+footer img{height:70px;width:auto}
+footer h4{margin:0 0 8px;color:var(--copper-soft);font-family:var(--f-display);font-size:15px}
+footer p{margin:0;font-size:14px}
+footer .phones a{display:block;font-size:18px;font-weight:600;color:#fff;text-decoration:none;direction:ltr;text-align:right;font-variant-numeric:tabular-nums}
+footer .lic{font-size:14px;line-height:2}
+footer .lic b{color:#fff;font-variant-numeric:tabular-nums}
+.copy{border-top:1px solid rgba(255,255,255,.12);font-size:12.5px;text-align:center;padding-block:14px;color:#BFA7A3}
+
+/* detail sheet */
+.sheet{position:fixed;inset:0;z-index:50;background:rgba(30,10,14,.6);display:flex;justify-content:center;align-items:flex-end;padding-top:env(safe-area-inset-top,0px)}
+.panel{background:var(--paper);width:min(1000px,100%);max-height:94vh;overflow:auto;border-radius:22px 22px 0 0;padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (min-width:760px){.sheet{align-items:center}.panel{border-radius:22px;max-height:90vh}}
+.panel header{position:sticky;top:0;z-index:2;background:var(--paper);display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line)}
+.panel header h3{font-size:20px;color:var(--burgundy)}
+.x{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--cream);font-size:22px;line-height:1;cursor:pointer;color:var(--ink)}
+.stage{position:relative;background:#1d1214}
+.strip{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.strip::-webkit-scrollbar{display:none}
+.strip img{flex:0 0 100%;width:100%;height:min(62vh,560px);object-fit:contain;scroll-snap-align:center}
+.nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,253,249,.9);color:var(--burgundy);font-size:22px;cursor:pointer}
+.nav.prev{right:12px}.nav.next{left:12px}
+.idx{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.55);color:#fff;font-size:13px;padding:2px 12px;border-radius:999px;font-variant-numeric:tabular-nums}
+.thumbs{display:flex;gap:6px;overflow-x:auto;padding:10px 20px;background:var(--cream)}
+.thumbs button{flex:0 0 auto;padding:0;border:2px solid transparent;border-radius:8px;overflow:hidden;cursor:pointer;background:none}
+.thumbs button[aria-current="true"]{border-color:var(--copper)}
+.thumbs img{width:54px;height:72px;object-fit:cover;display:block}
+.info{padding:20px;display:grid;grid-template-columns:1.2fr 1fr;gap:24px}
+.info .row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.price{font-family:var(--f-display);font-size:26px;color:var(--burgundy);font-variant-numeric:tabular-nums}
+.specs.big{margin-block:14px}
+.specs:empty{display:none}
+.info .act{display:flex;flex-direction:column;gap:10px}
+.info .act .btn{justify-content:center}
+.note{font-size:13px;color:var(--muted)}
+
+.preview{background:#FFF4D6;color:#6B4A00;font-size:13.5px;text-align:center;padding:8px max(16px,env(safe-area-inset-right,0px)) 8px max(16px,env(safe-area-inset-left,0px))}
+
+@media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}footer .wrap{grid-template-columns:1fr 1fr}}
+@media (max-width:720px){
+  .hero .wrap{grid-template-columns:1fr;padding-block:28px}
+  .hero figure{aspect-ratio:4/3;order:-1}
+  .grid{grid-template-columns:1fr}
+  .about .box{grid-template-columns:1fr;padding:18px}
+  .info{grid-template-columns:1fr}
+  footer .wrap{grid-template-columns:1fr}
+  .top img{height:48px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+<style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+</head>
+<body>
+
+
+<div class="top"><div class="wrap">
+  <img src="img/logo-white.png" alt="شركة هجف العقارية">
+  <a class="call" href="https://wa.me/966570705377" target="_blank" rel="noopener">تواصل واتساب</a>
+</div></div>
+
+<section class="hero"><div class="wrap">
+  <div>
+    <div class="eyebrow">الرياض · حي القيروان</div>
+    <h1>أدوار القيروان</h1>
+    <p>فيلتان، كل فيلا دور أرضي ودور أول وشقة علوية، بتشطيب حديث ومداخل مستقلة في حي القيروان شمال الرياض. الفيلا الأولى للبيع والثانية للإيجار.</p>
+    <div class="facts">
+      <div><b>6</b><span>وحدات في فيلتين</span></div>
+      <div><b>312.5 م²</b><span>مساحة أرض الفيلا</span></div>
+      <div><b id="availCount">–</b><span>متاحة الآن</span></div>
+    </div>
+    <div class="cta">
+      <a class="btn copper" href="#units">عرض الوحدات</a>
+      <a class="btn ghost" href="https://maps.app.goo.gl/ZoydboEgtYpHmJ7m6" target="_blank" rel="noopener">الموقع على الخريطة</a>
+    </div>
+  </div>
+  <figure><img src="img/facade.jpg" alt="واجهة مبنى أدوار القيروان ليلاً"></figure>
+</div></section>
+
+<section class="units" id="units"><div class="wrap">
+  <div class="head">
+    <div><h2>الوحدات</h2><p>اضغط على الوحدة لعرض الصور والتفاصيل</p></div>
+    <div class="filters" role="group" aria-label="تصفية الوحدات">
+      <button id="f-all" data-f="all" aria-pressed="true">الكل</button>
+      <button id="f-sale" data-f="sale" aria-pressed="false">للبيع</button>
+      <button id="f-rent" data-f="rent" aria-pressed="false">للإيجار</button>
+      <button id="f-av" data-f="av" aria-pressed="false">المتاح فقط</button>
+    </div>
+  </div>
+  <div id="grid"></div>
+</div></section>
+
+<section class="about"><div class="wrap"><div class="box">
+  <div>
+    <h2>مميزات المشروع</h2>
+    <ul class="feat">
+      <li>مدخل مستقل لكل وحدة</li>
+      <li>إضاءة خطية مخفية وسبوت لايت في الأسقف</li>
+      <li>أرضيات بورسلان بنقشة الخشب</li>
+      <li>دورات مياه بأطقم معلقة وخلاطات سوداء وجدران بورسلان</li>
+      <li>واجهة حجرية بإضاءة معمارية ومواقف أمام المبنى</li>
+    </ul>
+  </div>
+  <div>
+    <h2>بيانات العقار</h2>
+    <dl class="kv">
+      <dt>المدينة</dt><dd>الرياض</dd>
+      <dt>الحي</dt><dd>القيروان</dd>
+      <dt>الموقع</dt><dd><a href="https://maps.app.goo.gl/ZoydboEgtYpHmJ7m6" target="_blank" rel="noopener" style="color:var(--copper);font-weight:600">افتح في خرائط Google</a></dd>
+      <dt>مساحة أرض الفيلا</dt><dd>312.5 م² (12.5 × 25 م)</dd>
+      <dt>الشارع</dt><dd>شارع بعرض 15 م</dd>
+      <dt>الاستخدام</dt><dd>سكني</dd>
+    </dl>
+  </div>
+</div></div></section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <img src="img/logo-white.png" alt="شركة هجف العقارية">
+      <p style="margin-top:10px">وساطة وتسويق وإدارة أملاك</p>
+      <p style="margin-top:8px"><a href="https://maps.app.goo.gl/ZoydboEgtYpHmJ7m6" target="_blank" rel="noopener">موقع المشروع على الخريطة</a></p>
+    </div>
+    <div class="phones">
+      <h4>للتواصل</h4>
+      <a href="tel:+966570705377">0570705377</a>
+      <a href="tel:+966570707301">0570707301</a>
+    </div>
+    <div class="lic">
+      <h4>التراخيص</h4>
+      رخصة فال: <b>1200034998</b><br>
+      ترخيص إعلان البيع: <a href="https://eservicesredp.rega.gov.sa/public/OfficesBroker/ElanDetails/ad2577f3-6cf1-449e-8dc2-5c2a0e40fc53" target="_blank" rel="noopener"><b>7201233996</b></a><br>
+      ترخيص إعلان الإيجار: <a href="https://eservicesredp.rega.gov.sa/public/OfficesBroker/ElanDetails/7756ea46-bc51-41a9-a4ed-f49888303e82" target="_blank" rel="noopener"><b>7201232846</b></a>
+    </div>
+  </div>
+  <div class="copy">© شركة هجف العقارية</div>
+</footer>
+
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sTitle">
+  <div class="panel">
+    <header><h3 id="sTitle"></h3><button class="x" id="close" aria-label="إغلاق">×</button></header>
+    <div class="stage">
+      <div class="strip" id="strip"></div>
+      <button class="nav prev" id="prev" aria-label="الصورة السابقة">›</button>
+      <button class="nav next" id="next" aria-label="الصورة التالية">‹</button>
+      <div class="idx" id="idx"></div>
+    </div>
+    <div class="thumbs" id="thumbs"></div>
+    <div class="info" id="info"></div>
+  </div>
+</div>
+
+<script>
+/* ======== بيانات الوحدات: عدّل هنا فقط ========
+   status: "available" متاح | "rented" مؤجرة | "reserved" محجوزة | "sold" مباعة
+   deal:   "sale" للبيع | "rent" للإيجار
+   القيم null تظهر "يُحدد" لحين تأكيدها */
+const PHONE = "966570705377";
+const UNITS = [
+  // ===== الفيلا الأولى: للبيع =====
+  { id:"v1-ground", villa:1, no:1, name:"الدور الأرضي", deal:"sale", status:"available",
+    area:186.36, rooms:3, baths:3, price:1800000,
+    layout:["3 غرف نوم منها غرفة ماستر","مجلس مستقل","صالة عائلية","مطبخ غير مركّب","3 دورات مياه","غرفة خادمة"],
+    desc:"دور أرضي بمدخل مستقل ومجلس مستقل وغرفة خادمة.", prefix:"g", count:17, cover:6 },
+  { id:"v1-first", villa:1, no:2, name:"الدور الأول", deal:"sale", status:"available",
+    area:178.56, rooms:3, baths:4, price:1650000,
+    layout:["3 غرف نوم منها غرفة ماستر","مجلس مستقل","صالة معيشة","مطبخ غير مركّب","4 دورات مياه"],
+    desc:"دور أول بمدخل مستقل ومجلس مستقل و4 دورات مياه.", prefix:"f", count:23, cover:5 },
+  { id:"v1-apt", villa:1, no:3, name:"الشقة العلوية", deal:"sale", status:"available",
+    area:74.71, rooms:2, baths:2, price:1300000,
+    layout:["غرفتا نوم","صالة","مطبخ غير مركّب","دورتا مياه"],
+    desc:"شقة علوية بغرفتي نوم وصالة ومدخل مستقل.", prefix:"a", count:15, cover:9 },
+  // ===== الفيلا الثانية: للإيجار (السعر سنوي) =====
+  { id:"v2-ground", villa:2, no:4, name:"الدور الأرضي", deal:"rent", status:"rented",
+    area:186.36, rooms:3, baths:3, price:115000,
+    layout:["3 غرف نوم منها غرفة ماستر","مجلس مستقل","صالة عائلية","مطبخ غير مركّب","3 دورات مياه","غرفة خادمة"],
+    desc:"دور أرضي بمدخل مستقل ومجلس مستقل وغرفة خادمة.", prefix:"g", count:17, cover:6 },
+  { id:"v2-first", villa:2, no:5, name:"الدور الأول", deal:"rent", status:"available",
+    area:178.56, rooms:3, baths:4, price:110000,
+    layout:["3 غرف نوم منها غرفة ماستر","مجلس مستقل","صالة معيشة","مطبخ غير مركّب","4 دورات مياه"],
+    desc:"دور أول بمدخل مستقل ومجلس مستقل و4 دورات مياه.", prefix:"f", count:23, cover:5 },
+  { id:"v2-apt", villa:2, no:6, name:"الشقة العلوية", deal:"rent", status:"available",
+    area:74.71, rooms:2, baths:2, price:85000,
+    layout:["غرفتا نوم","صالة","مطبخ غير مركّب","دورتا مياه"],
+    desc:"شقة علوية بغرفتي نوم وصالة ومدخل مستقل.", prefix:"a", count:15, cover:9 },
+];
+/* =============================================== */
+
+const DEAL = {sale:"للبيع", rent:"للإيجار"};
+const TBD = '<i class="tbd">يُحدد</i>';
+const imgs = u => Array.from({length:u.count},(_,i)=>`img/${u.prefix}${String(i+1).padStart(2,"0")}.jpg`);
+const v = (x,s="") => x==null ? TBD : x.toLocaleString("en-US") + s;
+const STATUS = {available:"متاحة", rented:"مؤجرة", reserved:"محجوزة", sold:"مباعة"};
+const stat = u => `<span class="pill ${u.status==="available"?"ok":"no"}">${STATUS[u.status]||"غير متاحة"}</span>`;
+const priceTxt = u => u.price==null ? '<span style="font-size:18px">السعر عند التواصل</span>' : u.price.toLocaleString("en-US") + " ريال" + (u.deal==="rent"?" / سنوياً":"");
+const specList = u => { const it=[[u.area," م²","المساحة"],[u.rooms,"","غرف"],[u.baths,"","دورات مياه"]].filter(x=>x[0]!=null);
+  return it.length ? it.map(x=>`<li><b>${x[0].toLocaleString("en-US")}${x[1]}</b>${x[2]}</li>`).join("") : ""; };
+
+let filter="all";
+function render(){
+  const g=document.getElementById("grid");
+  const list=UNITS.filter(u=>filter==="all"||(filter==="av"?u.status==="available":u.deal===filter));
+  const card = u=>`
+    <button class="card ${u.status!=="available"?"off":""}" data-id="${u.id}" id="card-${u.id}">
+      <div class="ph"><img src="${imgs(u)[(u.cover||1)-1]}" alt="${u.name}" loading="lazy">
+        <div class="tags"><span class="pill deal">${DEAL[u.deal]}</span>${stat(u)}</div>
+        <span class="count">${u.count} صورة</span></div>
+      <div class="body">
+        <h3>${u.name} <small class="no">وحدة ${u.no}</small></h3>
+        <div class="price sm">${priceTxt(u)}</div>
+        <div class="sub">${u.desc}</div>
+        <ul class="specs">${specList(u)}</ul>
+        <span class="more">عرض التفاصيل والصور ←</span>
+      </div>
+    </button>`;
+  const VILLA={1:"الفيلا الأولى · للبيع",2:"الفيلا الثانية · للإيجار (سنوي)"};
+  g.innerHTML = [1,2].map(vn=>{const l=list.filter(u=>u.villa===vn); return l.length?`<h3 class="villa">${VILLA[vn]}</h3><div class="grid">${l.map(card).join("")}</div>`:""}).join("") || '<p class="note">لا توجد وحدات بهذا التصنيف حالياً.</p>';
+  document.getElementById("availCount").textContent = UNITS.filter(u=>u.status==="available").length;
+}
+document.querySelectorAll(".filters button").forEach(b=>b.addEventListener("click",()=>{
+  filter=b.dataset.f;
+  document.querySelectorAll(".filters button").forEach(x=>x.setAttribute("aria-pressed",x===b));
+  render();
+}));
+document.getElementById("grid").addEventListener("click",e=>{
+  const c=e.target.closest(".card"); if(c) openUnit(c.dataset.id);
+});
+
+const sheet=document.getElementById("sheet"), strip=document.getElementById("strip");
+let cur=null, n=0;
+function openUnit(id){
+  const u=UNITS.find(x=>x.id===id); if(!u) return; cur=u;
+  const list=imgs(u); n=list.length;
+  document.getElementById("sTitle").textContent=`${u.name} · ${u.villa===1?"الفيلا الأولى":"الفيلا الثانية"}`;
+  strip.innerHTML=list.map((s,i)=>`<img src="${s}" alt="${u.name} صورة ${i+1}" loading="${i<2?"eager":"lazy"}">`).join("");
+  document.getElementById("thumbs").innerHTML=list.map((s,i)=>`<button data-i="${i}" aria-label="صورة ${i+1}"><img src="${s}" alt="" loading="lazy"></button>`).join("");
+  const msg=encodeURIComponent(`السلام عليكم، أرغب بالاستفسار عن ${u.name} - وحدة ${u.no} (${DEAL[u.deal]}) في أدوار القيروان`);
+  document.getElementById("info").innerHTML=`
+    <div>
+      <div class="row"><span class="pill deal">${DEAL[u.deal]}</span>${stat(u)}</div>
+      <div class="price">${priceTxt(u)}</div>
+      <ul class="specs big">${specList(u)}</ul>
+      <p style="margin:0 0 8px">${u.desc}</p>
+      <ul class="feat">${u.layout.map(x=>`<li>${x}</li>`).join("")}<li>مدخل مستقل</li></ul>
+    </div>
+    <div class="act">
+      <a class="btn burg" href="https://wa.me/${PHONE}?text=${msg}" target="_blank" rel="noopener">استفسر عبر واتساب</a>
+      <a class="btn line" href="https://maps.app.goo.gl/ZoydboEgtYpHmJ7m6" target="_blank" rel="noopener">موقع المشروع على الخريطة</a>
+      <a class="btn line" href="tel:+966570705377">اتصال: 0570705377</a>
+      <a class="btn line" href="tel:+966570707301">اتصال: 0570707301</a>
+      <p class="note">صور الوحدة من نفس نوع الوحدة في المشروع.<br>ترخيص الإعلان: ${u.deal==="sale"?"7201233996":"7201232846"} · رخصة فال: 1200034998</p>
+    </div>`;
+  sheet.hidden=false; document.body.style.overflow="hidden";
+  strip.scrollLeft=0; setIdx(0);
+  document.getElementById("close").focus();
+}
+function closeSheet(){sheet.hidden=true;document.body.style.overflow="";cur&&document.getElementById("card-"+cur.id)?.focus()}
+function curIdx(){return Math.round(Math.abs(strip.scrollLeft)/strip.clientWidth)}
+function go(i){i=(i+n)%n;strip.scrollTo({left:-i*strip.clientWidth*(getComputedStyle(strip).direction==="rtl"?1:-1),behavior:"smooth"});setIdx(i)}
+function setIdx(i){
+  document.getElementById("idx").textContent=`${i+1} / ${n}`;
+  document.querySelectorAll("#thumbs button").forEach((b,k)=>{b.setAttribute("aria-current",k===i);if(k===i)b.scrollIntoView({block:"nearest",inline:"nearest"})});
+}
+let t; strip.addEventListener("scroll",()=>{clearTimeout(t);t=setTimeout(()=>setIdx(curIdx()),80)});
+document.getElementById("next").onclick=()=>go(curIdx()+1);
+document.getElementById("prev").onclick=()=>go(curIdx()-1);
+document.getElementById("thumbs").addEventListener("click",e=>{const b=e.target.closest("button");if(b)go(+b.dataset.i)});
+document.getElementById("close").onclick=closeSheet;
+sheet.addEventListener("click",e=>{if(e.target===sheet)closeSheet()});
+document.addEventListener("keydown",e=>{
+  if(sheet.hidden) return;
+  if(e.key==="Escape") closeSheet();
+  if(e.key==="ArrowLeft") go(curIdx()+1);
+  if(e.key==="ArrowRight") go(curIdx()-1);
+});
+render();
+</script>
+
+</body>
+</html>
