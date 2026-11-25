@@ -176,17 +176,44 @@ footer .lic b{color:#fff;font-variant-numeric:tabular-nums}
 .call.home{display:inline-flex;align-items:center;gap:6px}
 .call.home svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
 @media (max-width:480px){.call.home span{display:none}.call.home{padding:6px 10px}}
+
+/* ===== shared HJF header (same as h-j-f.com) ===== */
+.hjf-top{position:sticky;top:0;z-index:40;background:var(--burgundy-deep);box-shadow:0 6px 24px rgba(0,0,0,.18)}
+.hjf-top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:8px;position:relative}
+.hjf-top .brand{display:flex;align-items:center;gap:16px;text-decoration:none}
+.hjf-top .brand .mk{height:106px;width:auto}
+.hjf-top .brand .wm{height:32px;width:auto}
+.hjf-top .menu{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.hjf-top .menu a{text-decoration:none;font-size:14.5px;padding:6px 12px;border-radius:999px;color:#EAD9D3;border:0;font-weight:400;white-space:nowrap}
+.hjf-top .menu a:hover{background:rgba(255,255,255,.08);color:#fff}
+.hjf-top .menu a.call{border:1px solid rgba(255,255,255,.35);color:#fff;font-weight:600}
+.hjf-top .burger{display:none;background:none;border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:10px;width:42px;height:38px;font-size:20px;cursor:pointer}
+@media (max-width:760px){
+  .hjf-top .burger{display:block}
+  .hjf-top .menu{display:none;position:absolute;inset:100% 0 auto 0;background:var(--burgundy-deep);flex-direction:column;align-items:stretch;padding:8px 16px 16px}
+  .hjf-top .menu.open{display:flex}
+  .hjf-top .brand .mk{height:76px}.hjf-top .brand .wm{height:24px}.hjf-top .brand{gap:12px}
+}
+html{scroll-padding-top:130px}
 </style>
 <style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
 </head>
 <body>
 
 
-<div class="top"><div class="wrap">
-  <a class="brand" href="https://h-j-f.com/" aria-label="هجف العقارية - الموقع الرئيسي"><img class="mk" src="img/mark-white.png" alt=""><img class="wm" src="img/wordmark-white.png" alt="هجف العقارية"></a>
-  <div class="topacts"><a class="call home" href="https://h-j-f.com/" aria-label="الموقع الرئيسي لهجف العقارية"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7M5 10v10h5v-6h4v6h5V10"/></svg><span>الموقع الرئيسي</span></a>
-  <a class="call" href="https://wa.me/966570707301" target="_blank" rel="noopener">تواصل واتساب</a></div>
-</div></div>
+<header class="top hjf-top" id="top"><div class="wrap">
+  <a class="brand" href="https://h-j-f.com/" aria-label="هجف العقارية - الموقع الرئيسي"><img class="mk" src="img/mark-metal.png" alt=""><img class="wm" src="img/wordmark-metal.png" alt="هجف العقارية"></a>
+  <button class="burger" id="burger" aria-label="القائمة" aria-expanded="false" aria-controls="menu">☰</button>
+  <nav class="menu" id="menu" aria-label="القائمة الرئيسية">
+    <a href="https://h-j-f.com/#about">من نحن</a>
+    <a href="https://h-j-f.com/#services">خدماتنا</a>
+    <a href="https://h-j-f.com/#journey">رحلتك معنا</a>
+    <a href="https://qairawan.h-j-f.com/" aria-current="page">مشاريعنا</a>
+    <a href="https://h-j-f.com/licenses.html">التراخيص</a>
+    <a href="https://h-j-f.com/#contact">تواصل معنا</a>
+    <a class="call" href="https://wa.me/966570707301" target="_blank" rel="noopener">واتساب</a>
+  </nav>
+</div></header>
 
 <section class="hero"><div class="wrap">
   <div>
@@ -417,5 +444,6 @@ document.addEventListener("keydown",e=>{
 render();
 </script>
 
+<script>{const b=document.getElementById("burger"),m=document.getElementById("menu");if(b&&m){b.onclick=()=>{const o=m.classList.toggle("open");b.setAttribute("aria-expanded",o)};m.addEventListener("click",e=>{if(e.target.tagName==="A"){m.classList.remove("open");b.setAttribute("aria-expanded",false)}})}}</script>
 </body>
 </html>
